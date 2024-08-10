@@ -1,23 +1,40 @@
 import React from "react";
 
-function NewTaskForm({ categoriesData, onFormSubmit }) {
-  function onTaskFormSubmit(ev) {
-    ev.preventDefault();
-    const textValue = ev.target.text.value;
-    const categoryValue = ev.target.category.value;
+function NewTaskForm({
+  categoriesData,
+  onTaskFormSubmit,
+  setCategory,
+  setDetails,
+}) {
+  // function onTaskFormSubmit(ev) {
+  //   ev.preventDefault();
+  //   const textValue = ev.target.text.value;
+  //   const categoryValue = ev.target.category.value;
 
-    const inputTask = { text: textValue, category: categoryValue };
-    onFormSubmit(inputTask);
-  }
+  //   const inputTask = { text: textValue, category: categoryValue };
+  //   onFormSubmit(inputTask);
+  // }
+
   return (
     <form className="new-task-form" onSubmit={onTaskFormSubmit}>
       <label>
         Details
-        <input type="text" name="text" />
+        <input
+          type="text"
+          name="text"
+          onChange={(e) => {
+            setDetails(e.target.value);
+          }}
+        />
       </label>
       <label>
         Category
-        <select name="category">
+        <select
+          name="category"
+          onChange={(e) => {
+            setCategory(e.target.value);
+          }}
+        >
           {categoriesData.map((ctgr) => {
             return ctgr !== "All" ? <option key={ctgr}>{ctgr}</option> : null;
           })}

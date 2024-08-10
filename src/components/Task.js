@@ -6,7 +6,7 @@ function Task({ category, text, deleteThis, index }) {
     const toBeDeleted = { text, category };
     console.log(toBeDeleted);
 
-    deleteThis(index);
+    deleteThis(toBeDeleted);
   }
   return (
     <div className="task">

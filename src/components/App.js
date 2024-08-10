@@ -12,13 +12,21 @@ function App() {
   //const [categoriesData, setCategoriesData] = useState(CATEGORIES);
   const categoriesData = CATEGORIES;
 
-function submitTask(newTask) {
-  setTasksData([...tasksData,newTask])
+    const [details, setDetails] = useState("");
+    const [category, setCategory] = useState("");
+
+function onTaskFormSubmit(ev) {
+  ev.preventDefault();
+  
+  setTasksData([...tasksData, { text:details, category:category }]);
+  //setTasksData([...tasksData, inputTask]);
 }
+
 function deleteThis(deletedObject){
-//const withRemovedTask = tasksData.filter((tsk) => {return tsk.category !== deletedObject.category && tsk.text !== deletedObject.text})
-const withRemovedTask = [...tasksData].splice(deletedObject,1);
+  const withRemovedTask = tasksData.filter((task) => !(task.category === deletedObject.category && task.text === deletedObject.text)
+);
 setTasksData(withRemovedTask);
+
 }
 const [filteredData, setFilteredData] = useState([]);
 const [isFiltered, setIsFiltered] = useState(false);
@@ -38,15 +46,18 @@ function filterThis(categoryToFilter) {
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter categoriesData={categoriesData} filterThis={filterThis} />
+      <CategoryFilter categories={CATEGORIES} filterThis={filterThis} />
       <NewTaskForm
         categoriesData={categoriesData}
-        onFormSubmit={submitTask}
+        onTaskFormSubmit={onTaskFormSubmit}
+        setDetails={setDetails}
+        setCategory={setCategory}
       />
-      {
-      !isFiltered? (<TaskList tasksData={tasksData} deleteThis={deleteThis} />)
-      : (<TaskList tasksData={filteredData} deleteThis={deleteThis} />)
-      }
+      {!isFiltered ? (
+        <TaskList tasksData={tasksData} deleteThis={deleteThis} />
+      ) : (
+        <TaskList tasksData={filteredData} deleteThis={deleteThis} />
+      )}
     </div>
   );
 }

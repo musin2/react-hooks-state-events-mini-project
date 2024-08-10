@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function CategoryFilter({ categoriesData, filterThis }) {
+function CategoryFilter({ categories, filterThis }) {
   const [selectedBtn, setSelectedBtn] = useState("");
 
   function onSelected(evnt) {
@@ -11,7 +11,7 @@ function CategoryFilter({ categoriesData, filterThis }) {
   return (
     <div className="categories">
       <h5>Category filters</h5>
-      {categoriesData.map((ctg) => {
+      {categories.map((ctg) => {
         return (
           <button
             className={selectedBtn === ctg ? "selected" : ""}
